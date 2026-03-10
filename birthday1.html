@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Surprise</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  font-family:Poppins;
+  color:white;
+  background:linear-gradient(-45deg,#ff6ec4,#7873f5,#ff758c,#ff7eb3);
+  background-size:400% 400%;
+  animation:bgMove 10s infinite;
+  overflow:hidden;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+h1{
+  font-family:Pacifico;
+  font-size:42px;
+}
+
+/* Message */
+.message{
+  max-width:320px;
+  font-size:20px;
+  font-family: 'Dancing Script', cursive;
+  margin-top:10px;
+}
+
+/* Buttons styling */
+button{
+  padding:12px 25px;
+  font-size:18px;
+  border-radius:25px;
+  cursor:pointer;
+  margin:10px;
+  transition:0.3s;
+  border:2px solid white;
+  background:transparent;
+  color:white;
+}
+
+#surpriseBtn{
+  background:white;
+  color:#ff4da6;
+  font-family:'Pacifico', cursive;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+}
+
+.choiceBtn{
+  font-family:'Great Vibes', cursive;
+  font-size:18px;
+}
+
+.choiceBtn:hover{
+  transform:scale(1.1);
+  color:#ff4da6;
+}
+
+#choices{
+  display:none;
+  flex-direction:row;
+}
+
+#videoBox{
+  display:none;
+  margin-top:20px;
+}
+
+video{
+  width:90%;
+  max-width:400px;
+  border-radius:20px;
+}
+
+/* Balloon */
+.balloon{
+  position:absolute;
+  width:50px;
+  animation:rise 10s linear forwards;
+}
+
+@keyframes rise{
+  0%{transform:translateY(100vh);}
+  100%{transform:translateY(-10vh);}
+}
+
+/* Spark */
+.sparkle{
+  position:absolute;
+  width:20px;
+  pointer-events:none;
+  animation:spark 0.8s linear;
+}
+
+@keyframes spark{
+  0%{opacity:1;transform:scale(1);}
+  100%{opacity:0;transform:scale(2);}
+}
+</style>
+</head>
+
+<body>
+
+<h1>Happy Birthday Ishi 🎉</h1>
+
+<div class="message">
+Honestly, I was going to write a normal birthday wish… but then I remembered it’s YOUR birthday 🎉 so it has to be special ✨😉
+</div>
+
+<button id="surpriseBtn" onclick="showOptions()">Want a Surprise 🎁</button>
+
+<div id="choices">
+  <button class="choiceBtn" id="yes">Yes 😌</button>
+  <button class="choiceBtn" id="no">No 😏</button>
+</div>
+
+<div id="videoBox">
+<video id="bdayVideo" controls>
+<source src="birthday.mp4" type="video/mp4">
+</video>
+</div>
+
+<script>
+/* Show Yes/No buttons only after Surprise click */
+function showOptions(){
+  document.getElementById("choices").style.display="flex";
+}
+
+/* Yes click → show video + hide all buttons */
+document.getElementById("yes").onclick=function(){
+  document.getElementById("videoBox").style.display="block";
+  document.getElementById("bdayVideo").play();
+  document.getElementById("choices").style.display="none";
+  document.getElementById("surpriseBtn").style.display="none";
+}
+
+/* No button random movement */
+let noBtn=document.getElementById("no");
+noBtn.onclick=function(){
+  let x=Math.random()*300-150;
+  let y=Math.random()*200-100;
+  noBtn.style.transform=`translate(${x}px,${y}px)`;
+}
+
+/* Floating balloons with pop sparks */
+setInterval(()=>{
+  let balloon=document.createElement("img");
+  balloon.className="balloon";
+  balloon.src="balloon.png";
+  balloon.style.left=Math.random()*100+"vw";
+  document.body.appendChild(balloon);
+
+  // Pop after random time (6-10s)
+  let popTime = Math.random()*4000+6000;
+  setTimeout(()=>{
+    // Add sparks around balloon
+    for(let i=0;i<5;i++){
+      let spark=document.createElement("img");
+      spark.className="sparkle";
+      spark.src="spark.png";
+      spark.style.left=(balloon.offsetLeft + Math.random()*50 - 25)+"px";
+      spark.style.top=(balloon.offsetTop + Math.random()*50 - 25)+"px";
+      document.body.appendChild(spark);
+      setTimeout(()=>spark.remove(),800);
+    }
+    balloon.remove();
+  }, popTime);
+
+},3000);
+
+/* Cursor sparkles */
+document.addEventListener("mousemove",e=>{
+  let sparkle=document.createElement("img");
+  sparkle.className="sparkle";
+  sparkle.src="spark.png";
+  sparkle.style.left=e.pageX+"px";
+  sparkle.style.top=e.pageY+"px";
+  document.body.appendChild(sparkle);
+  setTimeout(()=>sparkle.remove(),800);
+});
+</script>
+
+</body>
+</html>
