@@ -147,9 +147,16 @@ function showOptions(){
 }
 
 /* Yes click → show video + hide all buttons */
-document.getElementById("yes").onclick=function(){
-  document.getElementById("videoBox").style.display="block";
-  document.getElementById("bdayVideo").play();
+document.getElementById("yes").onclick = function(){
+    let video = document.getElementById("bdayVideo");
+    video.src = "https://drive.google.com/uc?export=download&id=1MzA0ykYBIBM_Z2LLo5SgkcMvlmi4J54A";
+    video.style.display = "block";
+    video.play();
+
+    // hide buttons
+    document.getElementById("surpriseBtn").style.display="none";
+    document.getElementById("choices").style.display="none";
+}
   document.getElementById("choices").style.display="none";
   document.getElementById("surpriseBtn").style.display="none";
 }
@@ -202,4 +209,5 @@ document.addEventListener("mousemove",e=>{
 
 </body>
 </html>
+
 
