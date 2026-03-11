@@ -196,7 +196,32 @@ document.addEventListener("mousemove",e=>{
   document.body.appendChild(sparkle);
   setTimeout(()=>sparkle.remove(),800);
 });
+  /* Falling hearts - subtle, few at a time */
+setInterval(()=>{
+  // Only create a heart 10% of the time → few hearts
+  if(Math.random() < 0.1){
+    let heart = document.createElement("div");
+    heart.style.position = "absolute";
+    heart.style.fontSize = (12 + Math.random()*10) + "px"; // random size
+    heart.style.left = Math.random()*window.innerWidth + "px"; // random horizontal
+    heart.style.top = "-20px"; // start above viewport
+    heart.style.pointerEvents = "none"; // don't block clicks
+    heart.style.zIndex = "9999";
+    heart.innerText = "💖";
+    document.body.appendChild(heart);
+
+    // Animate falling
+    let fallInterval = setInterval(()=>{
+      heart.style.top = (heart.offsetTop + 2 + Math.random()*3) + "px"; // random speed
+      if(heart.offsetTop > window.innerHeight){
+        heart.remove();
+        clearInterval(fallInterval);
+      }
+    },30);
+  }
+},500); // check every 0.5 seconds
 </script>
 
 </body>
 </html>
+
